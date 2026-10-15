@@ -22,7 +22,7 @@ export default function Home() {
     <Img src={photo("portrait")} alt="Santi sonriendo en la nieve de la cordillera" className="aspect-[3/4] w-full md:col-span-2" /></Wrap></section>
 
   <section className="bg-arena/40 py-24"><Wrap><div className="mb-10 flex flex-wrap items-end justify-between gap-4"><div><Kicker>El recorrido</Kicker><h2 className="serif mt-3 text-4xl sm:text-5xl">Cada destino, una historia</h2></div><Link href="/recorrido" className="font-medium text-tierra underline underline-offset-4">Ver mapa y todas las etapas</Link></div>
-    <div className="grid gap-6 md:grid-cols-3">{stages.slice(0, 3).map((s, i) => <Link key={s.slug} href={`/recorrido/${s.slug}`} className={`group block ${i === 1 ? "md:mt-12" : ""}`}>
+    <div className="grid gap-6 md:grid-cols-3">{["carretera-austral", "cruce-de-los-andes-y-vuelta-a-casa", "la-rioja-y-mina-la-mexicana"].map(k => stages.find(s => s.slug === k)!).map((s, i) => <Link key={s.slug} href={`/recorrido/${s.slug}`} className={`group block ${i === 1 ? "md:mt-12" : ""}`}>
       <div className="overflow-hidden"><Img src={photo(s.photo)} alt={s.title} className="aspect-[4/5] w-full transition-transform duration-700 group-hover:scale-105" /></div>
       <p className="mt-4 text-xs uppercase tracking-widest text-tierra">{s.place}</p><h3 className="serif mt-1 text-2xl">{s.title}</h3><p className="mt-2 text-sm text-gris">{s.desc}</p><span className="mt-3 inline-block text-sm font-medium text-tierra">Descubrir etapa →</span></Link>)}</div></Wrap></section>
 

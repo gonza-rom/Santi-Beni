@@ -4,8 +4,8 @@ import { Btn, Kicker, PageHero, Wrap } from "@/components/ui/ui";
 import { photo, site } from "@/lib/data";
 export const metadata: Metadata = { title: "Historia", description: "Santi Beni, cordobés, dejó todo para unir Ushuaia con Alaska en su Honda Wave 110cc, La Wavelona." };
 const chapters: [string, string, string][] = [
-  ["La decisión", "ushuaia", "¿Vale la pena venderlo todo por un sueño? Para mí, sí. Renuncié a mi trabajo, vendí mis pertenencias y arranqué desde Ushuaia. Muchos me dijeron que estaba loco, que una 110 no se iba a bancar el desafío."],
-  ["La Patagonia y Chile", "ripio", "Vientos de 100 km/h, los 73 malditos de la Ruta 40, quedarme sin nafta, una cadena cortada antes de Bariloche y meses recorriendo Chile con amigos motoviajeros como Poli y Walter. Cada problema mecánico fue una lección."],
+  ["La decisión", "ushuaia", "¿Vale la pena venderlo todo por un sueño? Para mí, sí. Renuncié a mi trabajo, vendí mis pertenencias y en octubre de 2025 salí de Córdoba rumbo a Ushuaia: la “prueba piloto” de 13.500 km por Mendoza, Neuquén, la Carretera Austral y Tierra del Fuego."],
+  ["El regreso por la Patagonia y Chile", "ripio", "Desde Ushuaia empecé a subir: vientos de 100 km/h, los 73 malditos de la Ruta 40, quedarme sin nafta, una cadena cortada antes de Bariloche y meses recorriendo Chile con amigos motoviajeros como Poli y Walter. Cada problema mecánico fue una lección."],
   ["Los Andes y la vuelta a casa", "moto", "Crucé la cordillera por el Paso Los Libertadores con nieve y volví a Córdoba después de más de 21.000 km. El reencuentro con mi abuela y el abrazo con mi mamá me recordaron por qué hago todo esto."],
   ["Rumbo a Alaska", "hero", "El 19 de agosto de 2026 arrancó la etapa grande: Córdoba, La Rioja, Mina La Mexicana a 4.500 msnm, Catamarca y Tucumán. Comparto todo en YouTube, Instagram y TikTok con una comunidad que no para de crecer."],
 ];
