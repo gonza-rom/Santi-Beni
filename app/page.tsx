@@ -7,12 +7,13 @@ import { shotSrc } from "@/lib/gallery";
 import { now, photo, posts, site, stages, stats, videos, ytThumb } from "@/lib/data";
 export default function Home() {
   return <>
-  <section data-noreveal className="relative flex min-h-screen items-end overflow-hidden"><div data-parallax className="absolute inset-0"><Img src={photo("v19")} alt="Dos motos en un camino de ripio de montaña, vistas desde el drone" eager className="kenburns h-full w-full" /></div>
-    <div className="absolute inset-0 bg-gradient-to-t from-carbon via-carbon/50 to-carbon/20" />
-    <Wrap className="fade relative w-full pb-20 pt-32 text-white sm:pb-24 sm:pt-40"><p className="mb-4 text-[11px] tracking-[.2em] text-arena sm:text-xs sm:tracking-[.35em]">🌎 {site.motto.toUpperCase()}</p>
-      <h1 className="serif max-w-4xl text-[2.6rem] leading-[1.05] sm:text-7xl">De Ushuaia a Alaska en una Wave 110cc</h1>
-      <p className="mt-6 text-lg text-crema/90">Moto • Camping • Trekking — un viaje por América contado kilómetro a kilómetro</p>
-      <div className="mt-8 flex flex-wrap gap-3"><Btn href="/historia" dark>Conocé mi historia</Btn><Btn href="/apoyar">Aportá al viaje</Btn></div></Wrap>
+  {/* Portada: Santi y la Wavelona en la Cordillera. El texto va arriba (sobre el cielo) para no tapar a Santi ni a la moto */}
+  <section data-noreveal className="relative flex min-h-screen items-start overflow-hidden"><div data-parallax className="absolute inset-0"><Img src={photo("v200")} alt="Santi junto a la Wavelona cargada, con la Cordillera de los Andes de fondo" eager className="kenburns h-full w-full object-[40%_15%]" /></div>
+    <div className="absolute inset-0 bg-gradient-to-b from-carbon/90 via-carbon/30 to-transparent" /><div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-carbon/60 to-transparent" />
+    <Wrap className="fade relative flex min-h-screen w-full flex-col justify-between pb-24 pt-24 text-white sm:pt-28"><div><p className="mb-4 text-[11px] tracking-[.2em] text-arena sm:text-xs sm:tracking-[.35em]">🌎 {site.motto.toUpperCase()}</p>
+      <h1 className="serif max-w-5xl text-[2.4rem] leading-[1.05] sm:text-6xl lg:text-[4.25rem]">De Ushuaia a Alaska en una Wave 110cc</h1>
+      <p className="mt-4 text-base text-crema/90 sm:text-lg">Moto • Camping • Trekking — un viaje por América contado kilómetro a kilómetro</p></div>
+      <div className="flex gap-2 sm:gap-3 [&>a]:whitespace-nowrap [&>a]:px-4 sm:[&>a]:px-6"><Btn href="/historia" dark>Conocé mi historia</Btn><Btn href="/apoyar">Aportá al viaje</Btn></div></Wrap>
     <a href="#presentacion" aria-label="Bajar" className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce text-2xl text-white">↓</a></section>
 
   <section className="border-b border-arena bg-white"><Wrap data-reveal-group className="grid grid-cols-2 divide-arena py-8 text-center md:grid-cols-4 md:divide-x">{stats.map(s => <div key={s.label} className="py-3"><p className="serif text-3xl text-tierra sm:text-4xl"><CountUp value={s.value} /></p><p className="mt-1 text-xs uppercase tracking-widest text-gris">{s.label}</p></div>)}</Wrap>
