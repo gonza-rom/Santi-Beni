@@ -28,7 +28,7 @@ function Fit({ all, sel }: { all: boolean; sel: string | null }) {
   return null;
 }
 export default function RouteMap({ sel, all, onSelect }: { sel: string | null; all: boolean; onSelect: (slug: string) => void }) {
-  return <MapContainer center={[-40, -68]} zoom={4} scrollWheelZoom={false} className="h-full w-full" attributionControl>
+  return <MapContainer center={[-40, -68]} zoom={4} scrollWheelZoom={false} dragging={!L.Browser.mobile} className="h-full w-full" attributionControl>
     <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' maxZoom={18} />
     <Fit all={all} sel={sel} />
     <Polyline positions={[last, ...nextRoute.map(n => n.p)]} pathOptions={{ color: "#0B1F3A", weight: 2, dashArray: "6 8", opacity: 0.6 }} />
