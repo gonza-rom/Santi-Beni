@@ -5,3 +5,9 @@ out/
 *.tsbuildinfo
 .DS_Store
 .vercel
+
+# Plantilla sin secretos (sí va al repo)
+!.env.example
+
+# Fotos grandes: se sirven desde Cloudinary (en el repo quedan solo las -sm de respaldo)
+public/images/viaje/v*[0-9].jpg

@@ -3,10 +3,11 @@ import Img from "@/components/ui/Img";
 import AliasBox from "@/components/donations/AliasBox";
 import { CountUp } from "@/components/ui/Motion";
 import { Btn, Kicker, Social, VideoEmbed, Wrap } from "@/components/ui/ui";
+import { shotSrc } from "@/lib/gallery";
 import { now, photo, posts, site, stages, stats, videos, ytThumb } from "@/lib/data";
 export default function Home() {
   return <>
-  <section data-noreveal className="relative flex min-h-screen items-end overflow-hidden"><div data-parallax className="absolute inset-0"><Img src={photo("hero")} alt="La Honda Wave cargada frente a un túnel de roca roja" eager className="kenburns h-full w-full" /></div>
+  <section data-noreveal className="relative flex min-h-screen items-end overflow-hidden"><div data-parallax className="absolute inset-0"><Img src={photo("v19")} alt="Dos motos en un camino de ripio de montaña, vistas desde el drone" eager className="kenburns h-full w-full" /></div>
     <div className="absolute inset-0 bg-gradient-to-t from-carbon via-carbon/50 to-carbon/20" />
     <Wrap className="fade relative w-full pb-20 pt-32 text-white sm:pb-24 sm:pt-40"><p className="mb-4 text-[11px] tracking-[.2em] text-arena sm:text-xs sm:tracking-[.35em]">🌎 {site.motto.toUpperCase()}</p>
       <h1 className="serif max-w-4xl text-[2.6rem] leading-[1.05] sm:text-7xl">De Ushuaia a Alaska en una Wave 110cc</h1>
@@ -40,9 +41,12 @@ export default function Home() {
 
   <section className="bg-carbon py-16 text-crema sm:py-24"><Wrap className="grid items-center gap-10 lg:grid-cols-5"><div className="lg:col-span-2"><Kicker light>▶ El video más visto</Kicker><h2 className="serif mt-4 text-4xl">{videos[0].title}</h2><p className="mt-4 text-crema/70">{videos[0].desc} Más de {videos[0].views} reproducciones.</p><div className="mt-8 flex flex-wrap gap-3"><Btn href="/videos" dark>Ver más videos</Btn><Btn href={site.youtube} external>Suscribirme</Btn></div></div><div data-reveal="right" className="lg:col-span-3"><VideoEmbed id={videos[0].id} title={videos[0].title} /></div></Wrap></section>
 
+  <section className="py-16 sm:py-24"><Wrap><div className="mb-8 flex flex-wrap items-end justify-between gap-4"><div><Kicker>📸 Galería</Kicker><h2 className="serif mt-3 text-4xl sm:text-5xl">El viaje en fotos</h2></div><Link href="/galeria" className="font-medium text-tierra underline underline-offset-4">Ver todas las fotos</Link></div>
+    <div data-reveal-group className="grid grid-cols-2 gap-3 md:grid-cols-4">{["v28", "v13", "v38", "v29", "v42", "v24", "v07", "v09"].map((k, i) => <Link key={k} href="/galeria" className={`group overflow-hidden ${i === 1 ? "col-span-2 row-span-2" : ""}`}><Img src={shotSrc(k, i !== 1)} alt="Foto del viaje" className="aspect-square h-full w-full transition-transform duration-700 group-hover:scale-105" /></Link>)}</div></Wrap></section>
+
   <section className="bg-arena/40 py-20"><Wrap className="text-center"><Kicker>🎥 Creador de reels</Kicker><h2 className="serif mt-3 text-4xl">Seguí la aventura en tiempo real</h2><p className="mx-auto mt-4 max-w-xl text-gris">En Instagram y TikTok subo el día a día del viaje; en YouTube, un capítulo nuevo cada semana.</p><div data-reveal><Social className="mt-8 justify-center text-carbon" /></div></Wrap></section>
 
-  <section className="relative overflow-hidden py-28"><Img src={photo("cordillera2")} alt="" className="absolute inset-0 h-full w-full scale-110" /><div className="absolute inset-0 bg-carbon/80" />
+  <section className="relative overflow-hidden py-28"><Img src={photo("v23")} alt="" className="absolute inset-0 h-full w-full scale-110" /><div className="absolute inset-0 bg-carbon/80" />
     <Wrap className="relative grid items-center gap-10 text-white md:grid-cols-2"><div><Kicker light>Aportar</Kicker><h2 className="serif mt-3 text-4xl sm:text-5xl">Ayudame a seguir haciendo kilómetros</h2><p className="mt-5 text-crema/85">Si disfrutás acompañándome en esta aventura, podés colaborar con lo que quieras. Cada aporte se transforma en nafta, repuestos y nuevos caminos para compartir.</p>
       <div className="mt-8"><Btn href="/apoyar">Más formas de apoyar</Btn></div></div><div data-reveal="zoom" className="text-carbon"><AliasBox /></div></Wrap></section></>;
 }
