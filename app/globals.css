@@ -1,0 +1,7 @@
+@tailwind base;@tailwind components;@tailwind utilities;
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',system-ui,sans-serif;background:#F7FAFF;color:#0B1F3A;overflow-x:hidden}
+.serif{font-family:'Playfair Display',Georgia,serif}
+:focus-visible{outline:2px solid #1E5BD8;outline-offset:3px}
+.fade{animation:f .8s ease both}@keyframes f{from{opacity:0;transform:translateY(12px)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
