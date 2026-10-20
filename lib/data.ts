@@ -129,7 +129,7 @@ export const ytThumb = (id:string) => `https://i.ytimg.com/vi/${id}/hqdefault.jp
 export const ytEmbed = (id:string) => `https://www.youtube-nocookie.com/embed/${id}`;
 export const ytWatch = (id:string) => `https://www.youtube.com/watch?v=${id}`;
 // Claves: "yt:ID" (miniatura de YouTube), "vNN" (fotos del viaje en public/images/viaje) o una clave de photos
-export const photo = (k:string) => k.startsWith("yt:") ? `https://i.ytimg.com/vi/${k.slice(3)}/maxresdefault.jpg` : /^v\d{2,3}$/.test(k) ? shotSrc(k) : photos[k] || "";
+export const photo = (k:string) => /^(https?:)?\//.test(k) ? k : k.startsWith("yt:") ? `https://i.ytimg.com/vi/${k.slice(3)}/maxresdefault.jpg` : /^v\d{2,3}$/.test(k) ? shotSrc(k) : photos[k] || "";
 // Helpers de capítulos
 export { episodes };
 export type { Episode };
@@ -139,5 +139,6 @@ export const allStageEpisodes = stages.flatMap(s => s.episodes);
 export const fmtViews = (n:number) => n >= 1000 ? `${(n / 1000).toLocaleString("es-AR", { maximumFractionDigits: n < 10000 ? 1 : 0 })} K` : String(n);
 export const fmtDate = (d:string) => new Date(d + "T12:00:00").toLocaleDateString("es-AR", { day:"numeric", month:"short", year:"numeric" });
 export const capLabel = (e:Episode) => e.cap ? `Cap. ${e.cap}` : "Especial";
-export const stageRange = (s:Stage) => { const ds = s.episodes.map(id => episodes[id].date).sort(); const f = (d:string) => new Date(d + "T12:00:00").toLocaleDateString("es-AR", { month:"short", year:"numeric" }); return f(ds[0]) === f(ds[ds.length - 1]) ? f(ds[0]) : `${f(ds[0])} – ${f(ds[ds.length - 1])}`; };
-export const stageCaps = (s:Stage) => { const c = s.episodes.map(id => episodes[id].cap).filter((x): x is string => !!x); return c.length ? (c.length > 1 ? `Cap. ${c[0]}–${c[c.length - 1]}` : `Cap. ${c[0]}`) : ""; };
+// eps: mapa de capítulos a usar (por defecto los fijos; las páginas pasan los datos en vivo de lib/live.ts)
+export const stageRange = (s:Stage, eps:Record<string,Episode> = episodes) => { const ds = s.episodes.map(id => eps[id].date).sort(); const f = (d:string) => new Date(d + "T12:00:00").toLocaleDateString("es-AR", { month:"short", year:"numeric" }); return f(ds[0]) === f(ds[ds.length - 1]) ? f(ds[0]) : `${f(ds[0])} – ${f(ds[ds.length - 1])}`; };
+export const stageCaps = (s:Stage, eps:Record<string,Episode> = episodes) => { const c = s.episodes.map(id => eps[id].cap).filter((x): x is string => !!x); return c.length ? (c.length > 1 ? `Cap. ${c[0]}–${c[c.length - 1]}` : `Cap. ${c[0]}`) : ""; };

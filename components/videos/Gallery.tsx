@@ -1,8 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Img from "@/components/ui/Img";
-import { videos, ytEmbed, ytThumb, ytWatch } from "@/lib/data";
-export default function Gallery() {
+import { ytEmbed, ytThumb, ytWatch, type Video } from "@/lib/data";
+// La lista llega desde el servidor (los más vistos, con las vistas actualizadas de YouTube)
+export default function Gallery({ videos }: { videos: Video[] }) {
   const [cur, setCur] = useState<string | null>(null); const back = useRef<HTMLElement | null>(null);
   const v = videos.find(x => x.id === cur);
   const close = () => { setCur(null); back.current?.focus(); };

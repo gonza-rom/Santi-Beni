@@ -3,16 +3,21 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Img from "@/components/ui/Img";
 import { Kicker, Social, VideoEmbed, Wrap } from "@/components/ui/ui";
-import { allStageEpisodes, capLabel, ep, fmtDate, fmtViews, stageOf, stages, ytThumb, ytWatch } from "@/lib/data";
+import { allStageEpisodes, capLabel, fmtDate, fmtViews, ytThumb, ytWatch } from "@/lib/data";
+import { getLive, REVALIDATE } from "@/lib/live";
+export const revalidate = REVALIDATE;
+// Los capítulos conocidos se generan al compilar; los nuevos de YouTube se generan la primera vez que alguien los visita
+export const dynamicParams = true;
 export const generateStaticParams = () => allStageEpisodes.map(id => ({ id }));
-export const generateMetadata = ({ params }: { params: { id: string } }): Metadata => { const e = ep(params.id); return e ? { title: `${capLabel(e)}: ${e.title}`, description: e.summary.slice(0, 160), openGraph: { images: [ytThumb(e.id)] } } : { title: "Capítulo" }; };
+export const generateMetadata = async ({ params }: { params: { id: string } }): Promise<Metadata> => { const e = (await getLive()).episodes[params.id]; return e ? { title: `${capLabel(e)}: ${e.title}`, description: e.summary.slice(0, 160), openGraph: { images: [ytThumb(e.id)] } } : { title: "Capítulo" }; };
 const secs = (t: string) => t.split(":").reduce((a, b) => a * 60 + +b, 0);
-export default function Capitulo({ params }: { params: { id: string } }) {
-  const e = ep(params.id); const s = stageOf(params.id); if (!e || !s) notFound();
-  const k = allStageEpisodes.indexOf(e.id); const prev = k > 0 ? ep(allStageEpisodes[k - 1]) : null; const next = k < allStageEpisodes.length - 1 ? ep(allStageEpisodes[k + 1]) : null;
+export default async function Capitulo({ params }: { params: { id: string } }) {
+  const { episodes, stages, allIds } = await getLive(); const ep = (id: string) => episodes[id];
+  const e = ep(params.id); const s = stages.find(x => x.episodes.includes(params.id)); if (!e || !s) notFound();
+  const k = allIds.indexOf(e.id); const prev = k > 0 ? ep(allIds[k - 1]) : null; const next = k < allIds.length - 1 ? ep(allIds[k + 1]) : null;
   const n = stages.indexOf(s) + 1;
   return <><section className="bg-carbon pb-12 pt-28 text-white"><Wrap><nav className="text-xs uppercase tracking-widest text-arena/80" aria-label="Migas"><Link href="/recorrido" className="hover:text-arena">Recorrido</Link> / <Link href={`/recorrido/${s.slug}`} className="hover:text-arena">Etapa {n}: {s.title}</Link></nav>
-    <p className="mt-6 text-xs uppercase tracking-[.3em] text-arena">{capLabel(e)} · {fmtDate(e.date)} · {e.duration} · {fmtViews(e.views)} vistas</p><h1 className="serif mt-3 max-w-4xl text-3xl leading-tight sm:text-5xl">{e.title}</h1>
+    <p className="mt-6 text-xs uppercase tracking-[.3em] text-arena">{capLabel(e)} · {fmtDate(e.date)}{e.duration ? ` · ${e.duration}` : ""} · {fmtViews(e.views)} vistas</p><h1 className="serif mt-3 max-w-4xl text-3xl leading-tight sm:text-5xl">{e.title}</h1>
     <div className="mt-8 max-w-4xl"><VideoEmbed id={e.id} title={e.title} /></div></Wrap></section>
   <Wrap className="grid gap-12 py-14 md:grid-cols-3"><article className="md:col-span-2"><Kicker>De qué trata</Kicker>{e.summary.split("\n\n").map((p, j) => <p key={j} className="mt-5 text-lg leading-8">{p}</p>)}
     <p className="mt-6 text-xs text-gris">Texto tomado de la descripción del video en YouTube.</p>
