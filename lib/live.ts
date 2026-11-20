@@ -1,7 +1,7 @@
 // Datos "en vivo" (solo servidor): combina lo cargado a mano con lo que publica el canal de YouTube
 // y con la planilla de "Ahora mismo". Se refresca solo cada REVALIDATE segundos (ISR de Next).
 // Si YouTube o la planilla no responden, la web sigue mostrando los datos fijos de lib/data.ts.
-import { episodes as staticEpisodes, now as staticNow, stages as staticStages, stats as staticStats, type Episode, type Stage } from "./data";
+import { noEmoji, notWave, episodes as staticEpisodes, now as staticNow, stages as staticStages, stats as staticStats, type Episode, type Stage } from "./data";
 
 export const REVALIDATE = 60 * 60 * 6; // 6 horas
 const CHANNEL_ID = "UCfpySnODU-mLN7lYD5d0tGA";
@@ -85,7 +85,7 @@ export async function getLive(): Promise<Live> {
     if (f.date < "2025-10-01") continue; // solo videos de la serie, no los viejos
     const { summary, timestamps } = cleanDesc(f.desc);
     const cap = capOf(f.title) ?? String(maxCap + 1); maxCap = Math.max(maxCap, Math.floor(+cap));
-    eps[f.id] = { id: f.id, cap, title: cleanTitle(f.title), date: f.date, views: f.views, duration: await duration(f.id), summary: summary || "Nuevo capítulo del viaje de Ushuaia a Alaska.", timestamps };
+    eps[f.id] = { id: f.id, cap, title: noEmoji(cleanTitle(f.title)), date: f.date, views: f.views, duration: await duration(f.id), summary: noEmoji(summary) || "Nuevo capítulo del viaje de Ushuaia a Alaska.", timestamps: timestamps.map(([t, l]) => [t, noEmoji(l)] as [string, string]) };
     if (!known.has(f.id)) fresh.push(f.id);
   }
   // Los capítulos nuevos se suman a la última etapa (la que está en curso)
@@ -94,6 +94,6 @@ export async function getLive(): Promise<Live> {
   const caps = Math.max(...allIds.map(id => Math.floor(+(eps[id].cap ?? 0))));
   const stats = staticStats.map(s => /suscriptores/.test(s.label) && subs ? { ...s, value: subs } : /capítulos/.test(s.label) ? { ...s, value: String(caps) } : s);
   const latest = allIds.map(id => eps[id]).sort((a, b) => b.date.localeCompare(a.date))[0];
-  const top = allIds.map(id => eps[id]).sort((a, b) => b.views - a.views).slice(0, 12);
+  const top = allIds.filter(id => !notWave.includes(id)).map(id => eps[id]).sort((a, b) => b.views - a.views).slice(0, 12);
   return { episodes: eps, stages, stats, subs: subs || staticStats[0].value, now, latest, top, allIds };
 }

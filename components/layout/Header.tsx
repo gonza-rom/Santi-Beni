@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { nav, site } from "@/lib/data";
+import { Close, Menu } from "@/components/ui/Icons";
 export default function Header() {
   const path = usePathname(); const [open, setOpen] = useState(false); const [sc, setSc] = useState(false); const [hide, setHide] = useState(false);
   // Se oculta al bajar y vuelve a aparecer al subir
@@ -15,7 +16,7 @@ export default function Header() {
       <nav className="hidden items-center gap-7 text-sm md:flex" aria-label="Principal">{nav.map(([l, h]) => <Link key={h} href={h} className={`link-u pb-0.5 hover:text-arena ${path === h || (h !== "/" && path.startsWith(h)) ? "text-arena" : ""}`}>{l}</Link>)}
         <Link href="/apoyar" className="bg-tierra px-4 py-2 font-medium hover:bg-arena hover:text-carbon">Aportar al viaje</Link></nav>
       <button className="flex h-11 w-11 items-center justify-center md:hidden" aria-label="Menú" aria-expanded={open} onClick={() => setOpen(!open)}>
-        <span className="text-2xl">{open ? "✕" : "☰"}</span></button>
+        {open ? <Close className="h-7 w-7" /> : <Menu className="h-7 w-7" />}</button>
     </div>
     {open && <nav className="flex flex-col gap-1 bg-carbon px-5 pb-6 text-white md:hidden" aria-label="Móvil">{[...nav, ["Contacto", "/contacto"], ["Aportar al viaje", "/apoyar"]].map(([l, h]) => <Link key={h} href={h} className="border-b border-white/10 py-3">{l}</Link>)}</nav>}
   </header>;

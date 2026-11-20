@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Img from "./Img";
 import { photo, site } from "@/lib/data";
+import { ArrowUpRight, Instagram, TikTok, YouTube } from "@/components/ui/Icons";
 export const Kicker = ({ children, light = false }: { children: React.ReactNode; light?: boolean }) => <p className={`text-xs uppercase tracking-[.3em] ${light ? "text-arena" : "text-tierra"}`}>{children}</p>;
 export const Btn = ({ href, children, dark = false, external = false }: { href: string; children: React.ReactNode; dark?: boolean; external?: boolean }) => {
   const c = `inline-flex min-h-[44px] items-center px-6 text-sm font-medium tracking-wide transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg ${dark ? "bg-tierra text-white hover:bg-arena hover:text-carbon" : "border border-white/70 text-white hover:bg-white hover:text-carbon"}`;
@@ -13,7 +14,7 @@ export function PageHero({ kicker, title, photoKey, sub, pos = "" }: { kicker: s
 }
 export const Wrap = ({ children, className = "", ...rest }: React.HTMLAttributes<HTMLDivElement> & { "data-reveal-group"?: boolean }) => <div {...rest} className={`mx-auto max-w-6xl px-5 ${className}`}>{children}</div>;
 export const Social = ({ className = "" }: { className?: string }) => <div className={`flex flex-wrap gap-2 sm:gap-3 ${className}`}>
-  <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[44px] items-center gap-2 border border-current px-5 text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 hover:border-tierra hover:bg-tierra hover:text-white">Instagram<span className="hidden sm:inline"> {site.igHandle}</span> ↗</a>
-  <a href={site.youtube} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[44px] items-center gap-2 border border-current px-5 text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 hover:border-tierra hover:bg-tierra hover:text-white">YouTube ↗</a>
-  <a href={site.tiktok} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[44px] items-center gap-2 border border-current px-5 text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 hover:border-tierra hover:bg-tierra hover:text-white">TikTok ↗</a></div>;
+  <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[44px] items-center gap-2 border border-current px-5 text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 hover:border-tierra hover:bg-tierra hover:text-white"><Instagram className="h-5 w-5" />Instagram<span className="hidden sm:inline">{site.igHandle}</span><ArrowUpRight /></a>
+  <a href={site.youtube} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[44px] items-center gap-2 border border-current px-5 text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 hover:border-tierra hover:bg-tierra hover:text-white"><YouTube className="h-5 w-5" />YouTube<ArrowUpRight /></a>
+  <a href={site.tiktok} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[44px] items-center gap-2 border border-current px-5 text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 hover:border-tierra hover:bg-tierra hover:text-white"><TikTok className="h-5 w-5" />TikTok<ArrowUpRight /></a></div>;
 export const VideoEmbed = ({ id, title }: { id: string; title: string }) => <iframe src={`https://www.youtube-nocookie.com/embed/${id}`} title={title} loading="lazy" className="aspect-video w-full bg-carbon" allow="encrypted-media; picture-in-picture" allowFullScreen />;

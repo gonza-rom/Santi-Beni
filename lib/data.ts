@@ -1,5 +1,8 @@
 // Contenido basado en el canal de YouTube de Santi (descripción y capítulos publicados). Validar con Santi antes de publicar.
-import { episodes, type Episode } from "./episodes";
+import { episodes as rawEpisodes, type Episode } from "./episodes";
+// Sin emojis: se quitan de títulos, resúmenes y marcas de tiempo que vienen de YouTube
+export const noEmoji = (s:string) => s.replace(/[\p{Extended_Pictographic}\p{Regional_Indicator}\u{FE0F}\u{200D}\u{20E3}]/gu, "").replace(/[ \t]{2,}/g, " ").replace(/^[ \t]+|[ \t]+$/gm, "").replace(/\(\s*\)/g, "").trim();
+const episodes: Record<string, Episode> = Object.fromEntries(Object.entries(rawEpisodes).map(([k, e]) => [k, { ...e, title: noEmoji(e.title), summary: noEmoji(e.summary), timestamps: e.timestamps.map(([t, l]) => [t, noEmoji(l)] as [string, string]) }]));
 import { shotSrc } from "./gallery";
 export const site = {
   name: "Santi Beni", tag: "MOTOVIAJERO",
@@ -20,7 +23,7 @@ export const photos: Record<string,string> = {
   ushuaia:"/images/ushuaia-alaska.jpg", logo:"/images/logo.jpg",
 };
 export const support = { alias: "santibenimotoviajero", platform: "Mercado Pago", qrImage: "" };
-export const stats = [{ value:"69,7 K", label:"suscriptores en YouTube" }, { value:"+21.000", label:"km en la primera etapa" }, { value:"4.500", label:"msnm en Mina La Mexicana" }, { value:"50", label:"capítulos de la serie" }];
+export const stats = [{ value:"69,7 K", label:"suscriptores en YouTube" }, { value:"+25.000", label:"km recorridos" }, { value:"4.500", label:"msnm en Mina La Mexicana" }, { value:"50", label:"capítulos de la serie" }];
 export const now = { place:"Norte argentino · Catamarca", detail:"Túneles de Paclín, Rumi Punco, Pomán y Andalgalá, rumbo al norte", date:"Octubre 2026", photo:"v42" };
 
 // Etapas del recorrido: cada una agrupa los capítulos de YouTube (ids en lib/episodes.ts), en orden.
@@ -69,7 +72,7 @@ export const stages: Stage[] = [
    data:[{label:"Compañeros",value:"Poli y Walter"},{label:"Destacado",value:"Volcán en Melipeuco"},{label:"Acampe",value:"Piedra del Viento"}], gallery:["v134","v166","v084","v093"] },
  { slug:"cruce-de-los-andes-y-vuelta-a-casa", title:"Cruce de los Andes con nieve y vuelta a casa", place:"Paso Los Libertadores → Córdoba", leg:"Ushuaia → Córdoba", desc:"Dijeron que era imposible cruzar los Andes en una 110 con nieve. Más de 21.000 km después, volví a casa.", photo:"v057", x:31, y:58,
    episodes:["1TcAWahyvPY","y96i37O83jg","qU8wHE5rDQ4"],
-   text:["Con cadena nueva y el corazón a mil salimos de La Calera con Walter: los caracoles chilenos, el frío extremo, el Cristo Redentor y problemas en la aduana argentina por el bidón de nafta.","De Mendoza a San Luis, con un seguidor policía en el camino y una parada técnica para probar una Yamaha.","El reencuentro con mi abuela y el abrazo con mi mamá. La “prueba piloto” terminaba en casa, pero el sueño de Alaska recién empezaba."],
+   text:["Con cadena nueva y el corazón a mil salimos de La Calera con Walter, un gran amigo que me dio la moto, para intentar llegar a Mendoza.","Pasamos de la costa a la nieve en un abrir y cerrar de ojos. Rodamos sobre los caracoles chilenos, un sinfín de curvas en el paso más concurrido de América y del mundo.","Nos acercábamos a la frontera y el frío extremo se hacía notar. No bastaba con cruzar por el túnel, como se hace tradicionalmente: yo quería llevar a la Wavelona por la ruta vieja, a casi 4.000 msnm, hasta llegar al Cristo Redentor… aunque la nieve puso las cosas más complicadas.","De Mendoza a San Luis, con un seguidor policía en el camino y una parada técnica para probar una Yamaha.","El reencuentro con mi abuela y el abrazo con mi mamá. La “prueba piloto” terminaba en casa, pero el sueño de Alaska recién empezaba."],
    data:[{label:"Paso",value:"Los Libertadores"},{label:"Clima",value:"Nieve y bajo cero"},{label:"Total etapa 1",value:"+21.000 km"}], gallery:["v051","v176","v170","v200"] },
  { slug:"preparacion-y-alaska-dia-1", title:"La preparación y Alaska Día 1", place:"Córdoba", leg:"Rumbo a Alaska", desc:"Ahorros reales, visas, el equipo para grabar, un viaje con mi viejo y la partida definitiva rumbo a Alaska.", photo:"yt:vywNnbbSiCs", x:49, y:50,
    episodes:["bPCcMLGuF8s","6DexdbZ8uH0","ugrHgGNSDwQ","vywNnbbSiCs"],
@@ -98,7 +101,7 @@ export const posts: Post[] = [
  { slug:"mina-la-mexicana-en-110cc", title:"Mina La Mexicana en 110cc", summary:"4.500 msnm, nieve, hielo y más de 40 cruces de ríos: el reto más difícil hasta ahora.", category:"Ruta", date:"Septiembre 2026", photo:"yt:CJZcm3jWkZ4", video:"CJZcm3jWkZ4",
    body:["Muchos me dijeron que era una locura intentar subir a la Mina La Mexicana en una Honda Wave 110cc.","La subida es, hasta ahora, el reto más difícil y hermoso de toda mi travesía por Argentina.","Nieve, hielo y más de 40 cruces de ríos en La Rioja. Los paisajes son de otro planeta.","¿Llegamos a la cima o la altura nos ganó la partida? Te lo cuento en el video."] },
  { slug:"cruzar-los-andes-con-nieve", title:"Dijeron que era imposible cruzar los Andes en una 110 con nieve", summary:"El Paso Los Libertadores, los caracoles chilenos y el frío extremo en la frontera.", category:"Ruta", date:"Julio 2026", photo:"moto", video:"1TcAWahyvPY",
-   body:["Después de meses increíbles recorriendo Chile tocaba despedirse y encarar uno de los desafíos más esperados y temidos: cruzar la Cordillera de los Andes por el Paso Los Libertadores.","Con cadena nueva y el corazón a mil salimos de La Calera con Walter para intentar llegar a Mendoza.","Pasamos de la costa a la nieve en un abrir y cerrar de ojos. ¿Aguantaría la Wavelona la altura del Cristo Redentor?","Como siempre, el camino nos tenía preparada una sorpresa."] },
+   body:["Después de meses increíbles recorriendo Chile tocaba despedirse y encarar uno de los desafíos más esperados y temidos: cruzar la Cordillera de los Andes por el Paso Los Libertadores.","Con cadena nueva y el corazón a mil salimos de La Calera con Walter, un gran amigo que me dio la moto, para intentar llegar a Mendoza.","Pasamos de la costa a la nieve en un abrir y cerrar de ojos. Rodamos sobre los caracoles chilenos, un sinfín de curvas en el paso más concurrido de América y del mundo.","Nos acercábamos a la frontera y el frío extremo se hacía notar. No bastaba con cruzar por el túnel, como se hace tradicionalmente: yo quería llevar a la Wavelona por la ruta vieja, a casi 4.000 msnm, hasta llegar al Cristo Redentor… aunque la nieve puso las cosas más complicadas.","¿Aguantaría la Wavelona la altura del Cristo Redentor? Como siempre, el camino nos tenía preparada una sorpresa."] },
  { slug:"mi-equipo-para-grabar", title:"Mi secreto para grabar solo y que parezca una película", summary:"Mi equipo completo: GoPro, drone, micrófonos, soportes y cómo edito en la ruta.", category:"Consejos", date:"Julio 2026", photo:"santi", video:"bPCcMLGuF8s",
    body:["Muchos me preguntan cómo hago para grabar mis viajes solo en moto. Acá está todo mi arsenal.","El equipo principal es una GoPro con sus accesorios, montada en el casco con una pinza. Para las tomas aéreas uso un drone.","También hablo de celulares vs. cámara de mano, micrófonos y audio, y los soportes que uso en el casco, la moto y los trípodes.","Por último, cómo edito y administro los archivos sin perder nada en el camino."] },
  { slug:"equipo-de-camping", title:"Todo el equipo de camping que llevo en la 110cc", summary:"Cómo armo el campamento, qué uso para cocinar y cómo busco lugares gratis para dormir.", category:"Camping", date:"Octubre 2026", photo:"v33", video:"5PjpzOy_iK0",
@@ -109,6 +112,18 @@ export const posts: Post[] = [
    body:["¿Vale la pena venderlo todo por un sueño? Tomé la decisión más difícil de mi vida: renuncié a mi trabajo y vendí mis pertenencias.","Muchos me dijeron que estaba loco, que una 110 no se iba a bancar el desafío. Pero acá estoy.","Es el inicio de una aventura donde el motor es chico pero las ganas de recorrer el continente son gigantes.","¿Cuál creés que será el mayor desafío de viajar en una 110 por toda América? Contámelo en los comentarios."] },
 ];
 
+// Videos con otras motos (Tornado 300, Kawasaki 500, Hness): no entran en "Los más vistos", que es solo de la Wavelona
+export const notWave = ["Km6KwboDRxU", "aoD_M-JHd28", "6DexdbZ8uH0", "JDVmGhqEcaU", "FV9qClSgy50", "Ab2WMEq0RNQ", "xyhW42_q4Nw"];
+// Listas de YouTube que eligió Santi para la sección "Guías y series"
+export const guides = { list: "PLqs_o9HrjnKihC903Mf5_LOAkZyXIbxK0", title: "Qué llevar en un viaje en moto", videos: [
+  { id: "HdEE681_qgc", title: "Herramientas para viajar en moto" }, { id: "IJk-UxjOTGo", title: "Ropa para viajar en moto: ¿qué me compro?" },
+  { id: "LkJyT9hKJ1g", title: "Elementos imprescindibles para acampar en moto" }, { id: "5PjpzOy_iK0", title: "Acampé solo en el río: esto llevo para sobrevivir" } ] };
+export const series = [
+  { list: "PLqs_o9HrjnKhAlYuRlQkNpu9pseT-6Iqk", title: "De Ushuaia a Alaska solo en una 110cc", desc: "La serie completa, capítulo por capítulo.", thumb: "THga9wi26nE" },
+  { list: "PLST09RjnP35Y", title: "Puna catamarqueña en Tornado 300", desc: "Desafío a más de 4.000 metros: arenales, tormentas y precipicios.", thumb: "FV9qClSgy50" },
+  { list: "PLqs_o9HrjnKiVitAbJtcwPKC2xYMzVw5G", title: "4 países en 15 días", desc: "Paraguay, Brasil y Uruguay: el viaje más loco que hicimos en moto.", thumb: "SJ-_eIUfy9c" },
+];
+export const ytList = (id:string) => `https://www.youtube.com/playlist?list=${id}`;
 export type Video = { id:string; title:string; desc:string; views:string; kind:"YouTube"|"Reel" };
 // id = ID del video de YouTube (se embebe y se usa su miniatura)
 export const videos: Video[] = [

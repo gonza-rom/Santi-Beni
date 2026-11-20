@@ -5,6 +5,7 @@ import Img from "@/components/ui/Img";
 import { Kicker, Social, VideoEmbed, Wrap } from "@/components/ui/ui";
 import { allStageEpisodes, capLabel, fmtDate, fmtViews, ytThumb, ytWatch } from "@/lib/data";
 import { getLive, REVALIDATE } from "@/lib/live";
+import { ArrowUpRight, Fuel, YouTube } from "@/components/ui/Icons";
 export const revalidate = REVALIDATE;
 // Los capítulos conocidos se generan al compilar; los nuevos de YouTube se generan la primera vez que alguien los visita
 export const dynamicParams = true;
@@ -21,7 +22,7 @@ export default async function Capitulo({ params }: { params: { id: string } }) {
     <div className="mt-8 max-w-4xl"><VideoEmbed id={e.id} title={e.title} /></div></Wrap></section>
   <Wrap className="grid gap-12 py-14 md:grid-cols-3"><article className="md:col-span-2"><Kicker>De qué trata</Kicker>{e.summary.split("\n\n").map((p, j) => <p key={j} className="mt-5 text-lg leading-8">{p}</p>)}
     <p className="mt-6 text-xs text-gris">Texto tomado de la descripción del video en YouTube.</p>
-    <div className="mt-10 flex flex-wrap gap-3"><a href={ytWatch(e.id)} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[44px] items-center bg-tierra px-6 text-sm font-medium text-white hover:bg-carbon">Ver en YouTube y comentar ↗</a><Link href="/apoyar" className="inline-flex min-h-[44px] items-center border border-carbon px-6 text-sm font-medium hover:bg-carbon hover:text-white">Aportar 1 litro de nafta ⛽</Link></div></article>
+    <div className="mt-10 flex flex-wrap gap-3"><a href={ytWatch(e.id)} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[44px] items-center bg-tierra px-6 text-sm font-medium text-white hover:bg-carbon gap-2"><YouTube className="h-5 w-5" />Ver en YouTube y comentar <ArrowUpRight /></a><Link href="/apoyar" className="inline-flex min-h-[44px] items-center border border-carbon px-6 text-sm font-medium hover:bg-carbon hover:text-white gap-2"><Fuel className="h-5 w-5" />Aportar 1 litro de nafta</Link></div></article>
     <aside>{e.timestamps.length > 0 && <><h2 className="serif text-2xl">En este video</h2><ol className="mt-4 divide-y divide-arena text-sm">{e.timestamps.map(([t, l]) => <li key={t + l}><a href={`${ytWatch(e.id)}&t=${secs(t)}s`} target="_blank" rel="noopener noreferrer" className="flex gap-3 py-2.5 hover:text-tierra"><span className="w-12 shrink-0 font-medium text-tierra">{t}</span><span>{l}</span></a></li>)}</ol></>}
       <div className={e.timestamps.length ? "mt-10" : ""}><h2 className="serif text-2xl">Etapa {n}</h2><Link href={`/recorrido/${s.slug}`} className="mt-3 block text-tierra underline">{s.title}</Link><p className="mt-2 text-sm text-gris">{s.desc}</p></div>
       <div className="mt-10"><h2 className="serif text-2xl">Seguí el viaje</h2><Social className="mt-4 text-carbon" /></div></aside></Wrap>

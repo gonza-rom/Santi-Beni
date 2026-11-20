@@ -10,7 +10,7 @@ const last = done[done.length - 1];
 const pin = (s: typeof stages[number]) => { const r = stageRoutes[s.slug]; return r[Math.floor((r.length - 1) / 2)] ?? r[0]; };
 const icon = (n: number, active: boolean, color: string) => L.divIcon({ className: "", iconSize: [26, 26], iconAnchor: [13, 13],
   html: `<div style="width:26px;height:26px;border-radius:50%;background:${active ? "#0B1F3A" : color};color:#fff;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;font:700 11px 'DM Sans',sans-serif;transform:scale(${active ? 1.3 : 1})">${n}</div>` });
-const flag = L.divIcon({ className: "", iconSize: [24, 24], iconAnchor: [12, 12], html: `<div style="font-size:20px;line-height:24px">🏁</div>` });
+const flag = L.divIcon({ className: "", iconSize: [24, 24], iconAnchor: [12, 12], html: `<svg width="24" height="24" viewBox="0 0 24 24" fill="#E8590C" stroke="#0B1F3A" stroke-width="1.6" stroke-linejoin="round"><path d="M5 21V4h12l-2 4 2 4H5"/></svg>` });
 function Fit({ all, sel }: { all: boolean; sel: string | null }) {
   const map = useMap();
   useEffect(() => {
