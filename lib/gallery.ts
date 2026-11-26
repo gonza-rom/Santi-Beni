@@ -35,7 +35,7 @@ export const shots: Shot[] = [
   { id: "v01", caption: "Noche de camping con hamaca y toldo", tag: "Camping" },
   { id: "v33", caption: "Al lado del fogón", tag: "Camping" },
   { id: "v03", caption: "Fogón y pava para el mate", tag: "Camping" },
-  { id: "v02", caption: "Muelle del lago, Chile", tag: "Ruta", wide: true },
+  { id: "v02", caption: "Lago O’Higgins: fin de la Carretera Austral", tag: "Ruta", wide: true },
   { id: "v48", caption: "Frente a un lago turquesa (¿Potrerillos?)", tag: "Gente" },
   { id: "v06", caption: "Selfie frente a un mural", tag: "Gente" },
   { id: "v47", caption: "Murales en el camino", tag: "La Wave" },
